@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: josephhoffman-josephhoffman-poi-backend-app-dev
+  annotations:
+    argocd/app-name: josephhoffman-josephhoffman-poi-backend-app-dev
+    backstage.io/kubernetes-id: josephhoffman-josephhoffman-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: josephhoffman
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=josephhoffman-josephhoffman-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: Summit23Janus2/josephhoffman-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/dev-pipelines/ns/josephhoffman/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/k8s/ns/josephhoffman/deployments/josephhoffman-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.summit23blues.6mbu.p1.openshiftapps.com/#https://github.com/Summit23Janus2/josephhoffman-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "josephhoffman"
+  system: workshop-system-josephhoffman
+  providesApis:
+    - backend-api-josephhoffman
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-josephhoffman
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "josephhoffman"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-josephhoffman
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://josephhoffman-poi-backend-app-josephhoffman.apps.summit23blues.6mbu.p1.openshiftapps.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/Summit23Janus2/josephhoffman-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "josephhoffman"
+  system: workshop-system-josephhoffman
+  definition:
+    $text: https://github.com/Summit23Janus2/josephhoffman-backend/tree/main/src/main/resources/META-INF/openapi.yaml
